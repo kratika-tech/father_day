@@ -191,7 +191,14 @@ h1{font-size:2.5rem}
 }
 
 #entryFee{font-size:2rem;font-weight:bold;margin-bottom:15px}
-#runBtn{position:absolute;transition:.25s}
+#runBtn{
+position:fixed;
+left:50%;
+top:75%;
+transform:translateX(-50%);
+transition:.18s;
+z-index:999;
+}
 #payLater{position:fixed;bottom:20px;right:25px;cursor:pointer;font-size:.9rem;opacity:.8}
 .qrimg{width:280px;max-width:80vw;border-radius:15px;margin:20px 0}
 
@@ -369,15 +376,32 @@ setInterval(()=>{
  if(el) el.innerHTML='Current Entry Fee: ₹'+fee;
 },1000);
 
-const runBtn=document.getElementById('runBtn');
+const runBtn = document.getElementById('runBtn');
+
 if(runBtn){
-runBtn.addEventListener('mouseover',()=>{
- const padding=30;
-const maxX=window.innerWidth-runBtn.offsetWidth-padding;
-const maxY=window.innerHeight-runBtn.offsetHeight-padding;
-runBtn.style.left=(Math.random()*(maxX-padding)+padding)+'px';
-runBtn.style.top=(Math.random()*(maxY-padding)+padding)+'px';
-});
+
+function moveButton(){
+
+    const padding = 40;
+
+    const btnWidth = runBtn.offsetWidth;
+    const btnHeight = runBtn.offsetHeight;
+
+    const maxX = window.innerWidth - btnWidth - padding;
+    const maxY = window.innerHeight - btnHeight - padding;
+
+    const x = Math.random() * (maxX - padding) + padding;
+    const y = Math.random() * (maxY - padding) + padding;
+
+    runBtn.style.left = x + "px";
+    runBtn.style.top = y + "px";
+
+    runBtn.style.transform = "none";
+}
+
+runBtn.addEventListener("mouseenter", moveButton);
+runBtn.addEventListener("mousemove", moveButton);
+
 }
 
 
